@@ -36,11 +36,11 @@ If run with no arguments, the script prints a help message.
 ## Example
 
 ```sh
-python main.py add Notch "OG Minecraft creator"
-python main.py remove Notch
-python main.py reason Notch "Legend"
-python main.py bulk add.txt
-python main.py list
+python namemc.py add Notch "OG Minecraft creator"
+python namemc.py remove Notch
+python namemc.py reason Notch "Legend"
+python namemc.py bulk add.txt
+python namemc.py list
 ```
 
 ## File Format
