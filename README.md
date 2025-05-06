@@ -1,6 +1,6 @@
 # local-namemc
 
-A simple command-line tool to manage a local list of Minecraft players, tracking their usernames, UUIDs, and reasons for being on the list. The tool interacts with Mojang's APIs to fetch and update player information, and stores the data in a local file.
+A simple command-line tool in python to manage a local list of Minecraft players, tracking their usernames, UUIDs, and reasons for being on the list. The tool interacts with Mojang's APIs to fetch and update player information, and stores the data in a local file.
 
 ## Features
 
