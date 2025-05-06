@@ -1,0 +1,4 @@
+PreviousUsername1,CurrentUsername1|Reason1
+CurrentUsername2|Reason2
+PreviousUsername3,CurrentUsername3|Reason3
+PreviousUsername4,CurrentUsername4|
