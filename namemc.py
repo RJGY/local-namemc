@@ -14,7 +14,7 @@ class Player:
         return self.names[-1]
     
     def to_file_str(self) -> str:
-        return self.uuid + '|' + ','.join(self.names) + '|' + self.reason
+        return self.uuid + '|' + ','.join(self.names) + '|' + (self.reason or '')
     
     def __str__(self) -> str:
         return f'Current Name: {self.get_current_name()}, Previous Names: {self.names[:-1]}, UUID: {self.uuid}, Reason: {self.reason}'
@@ -46,6 +46,7 @@ def populate_player_list():
     players.clear()
     for player_str in player_str_list:
         uuid, names, reason = player_str.split('|', 2)
+        reason = reason if reason else None
         players.append(Player(uuid, names.split(','), reason))
 
 
@@ -80,18 +81,18 @@ def get_player_by_name(name: str) -> Player:
             return player
         
 
-def change_reason(name: str, uuid: str, reason: str) -> None:
-    if name:
-        player = get_player_by_name(name)
+def change_reason(name_or_uuid: str, reason: str) -> None:
+    if len(name_or_uuid) != 32:
+        player = get_player_by_name(name_or_uuid)
         if not player:
-            print(f'{name} is not in the list.')
+            print(f'{name_or_uuid} is not in the list.')
             return
         
         player.reason = reason
     else:
-        player = get_player_by_uuid(uuid)
+        player = get_player_by_uuid(name_or_uuid)
         if not player:
-            print(f'UUID {uuid} is not in the list.')
+            print(f'UUID {name_or_uuid} is not in the list.')
             return
         
         player.reason = reason
@@ -102,7 +103,11 @@ def bulk_add_players(file_path: str) -> None:
     f = open(file_path, 'r')
     player_str_list = [line.rstrip('\n') for line in f.readlines()]
     for player_str in player_str_list:
-        names, reason = player_str.split('|', 1)
+        if '|' in player_str:
+            names, reason = player_str.split('|', 1)
+        else:
+            names = player_str
+            reason = None
         names = names.split(',')
         uuid = convert_username_to_uuid(names[-1])
         player = Player(uuid, names, reason)
@@ -155,10 +160,13 @@ if __name__ == '__main__':
     if len(sys.argv) == 1:
         print_help()
     else:
+        populate_player_list()
         match sys.argv[1]:
             case 'add':
-                if not sys.argv[2]:
+                if len(sys.argv) == 2:
                     print('Add command requires username.')
+                elif len(sys.argv) == 3:
+                    add_player(sys.argv[2])
                 else:
                     add_player(sys.argv[2], sys.argv[3])
             case 'remove':
