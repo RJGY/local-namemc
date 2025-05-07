@@ -143,7 +143,6 @@ def e2e_test():
     add_player('RJGY', 'baller')
     bulk_add_players('add.txt')
     remove_player('RJGY')
-
     list_all_players()
 
 
